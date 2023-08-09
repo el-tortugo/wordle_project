@@ -1,32 +1,23 @@
-import random
-import sys
-from termcolor import colored
+class Wordle:
+    MAX_ATTEMPTS = 6
+    WORD_LENGTH = 5 # global Variables, constants of class
+    
+    def __init__(self, secret):
+        self.secret: str = secret # secret word 
+        self.attempts = [] # The attempts from the user.
+      
+    def attempt(self, word: str):
+        self.attempts.append(word)
 
-
-def print_menu():
- print("Let's play Wordle")
- print("Instructions: TBD")
- print("Type out your 5 letter guess:")
-
-print_menu()
-
-def read_random_word():
- with open("words.txt") as f:
-  words = f.read().splitlines()
-  return random.choice(words)
-
-word = read_random_word()
-
-for attempt in range(1, 7):
- guess = input().lower()
-
- for i in range( min(len(guess), 5) ):
-  if guess[i] == word[i]:
-   print(colored(guess[i], 'green'), end="")
-  elif guess[i] in word:
-   print(colored(guess[i], 'yellow'), end="")
-  else:
-   print(guess[i], end="")
-  
-  if guess == word:
-   print(colored("Correct! Good Job!"))
+    @property 
+    def is_solved(self):
+        return len(self.attempts) > 0 and self.attempts[-1] == self.secret
+    
+    @property
+    def remaining_attempts(self) -> int:
+        return self.MAX_ATTEMPTS - len(self.attempts)
+    
+    @property
+    def can_attempt(self):
+        return self.remaining_attempts > 0  and not self.is_solved
+    
