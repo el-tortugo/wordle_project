@@ -6,7 +6,7 @@ class Wordle:
     WORD_LENGTH = 5 # global Variables, constants of class
     
     def __init__(self, secret):
-        self.secret: str = secret # secret word 
+        self.secret: str = secret.upper() # secret word 
         self.attempts = [] # The attempts from the user
       
     def attempt(self, word: str):
@@ -14,7 +14,7 @@ class Wordle:
         self.attempts.append(word) # adds attempt to attempt list
       
     def guess(self, word: str):
-        word = word.upper # overrides casing, handles case sensitivity
+        word = word.upper() # overrides casing, handles case sensitivity
         result = []
         
         for i in range(self.WORD_LENGTH):
